@@ -1,11 +1,14 @@
 <!doctype html>
 <html lang="id">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="dark">
-  <title>Debcrypt — Bcrypt Wordlist Checker</title>
-  <!-- Embedded bcryptjs 3.0.3 license:
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Debcrypt — Bcrypt Wordlist Tool</title>
+<style>
+:root{color-scheme:dark;--bg:#0b0e14;--panel:#121822;--panel2:#0d131c;--line:#293544;--text:#edf3f8;--muted:#9caaba;--accent:#a9f36a;--accent-dark:#182310;--bad:#ff8c85;--good:#c7ffa3;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}*{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--text);background:radial-gradient(ellipse at 80% -5%,#20331b 0,transparent 30%),var(--bg)}.wrap{max-width:1100px;margin:0 auto;padding:26px 24px 52px}.top{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding:0 0 18px}.brand{display:flex;align-items:center;gap:11px;font-size:19px;font-weight:800;letter-spacing:-.04em}.logo{width:34px;height:34px;border-radius:10px;background:var(--accent);color:#17220e;display:grid;place-items:center;font-weight:950}.pill{padding:7px 10px;border:1px solid #314239;border-radius:99px;color:#c2e8a7;font-size:11px;letter-spacing:.08em;text-transform:uppercase}.hero{padding:42px 0 28px;max-width:760px}.eyebrow{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.18em;color:var(--accent)}h1{font-size:clamp(32px,5vw,52px);letter-spacing:-.055em;line-height:1.04;margin:12px 0}.hero p{font-size:15px;color:var(--muted);line-height:1.65;margin:0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.card{padding:20px;background:linear-gradient(155deg,#151e29,#111720 72%);border:1px solid var(--line);border-radius:15px}.card h2{font-size:13px;text-transform:uppercase;letter-spacing:.1em;margin:0 0 16px}.label{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:8px;font-size:13px;font-weight:700}.hint,.count{font-size:11px;font-weight:400;color:var(--muted)}textarea{width:100%;resize:vertical;border-radius:10px;border:1px solid #374658;background:var(--panel2);color:var(--text);padding:13px 14px;font:12px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;outline:none}textarea:focus{border-color:#a9f36a;box-shadow:0 0 0 3px #a9f36a1c}textarea::placeholder{color:#69798c}#hash{min-height:82px}#words{min-height:230px}.hintline{margin:8px 0 0;color:#8392a3;font-size:11px;line-height:1.55}.bar{display:flex;align-items:center;gap:10px;margin-top:16px}.button{border:0;border-radius:9px;padding:11px 16px;font-size:12px;font-weight:800;cursor:pointer}.button.primary{background:var(--accent);color:#192511}.button.secondary{background:#1a2430;color:var(--text);border:1px solid var(--line)}.button:disabled{opacity:.45;cursor:not-allowed}.button:hover:not(:disabled){filter:brightness(1.05)}.result{margin-top:16px}.status{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:12px}.dot{width:8px;height:8px;border-radius:50%;background:#66778b}.dot.ready{background:var(--accent);box-shadow:0 0 10px #a9f36a88}.dot.error{background:var(--bad)}.meter{height:6px;background:#202b36;border-radius:20px;overflow:hidden;margin:15px 0 8px}.meter i{display:block;width:0;height:100%;background:linear-gradient(90deg,#95e853,#d4ffad);transition:width .12s}.meta{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}.output{margin-top:16px;padding:14px;border-radius:10px;border:1px dashed #3a4858;background:var(--panel2);min-height:74px}.output-title{font-size:10px;text-transform:uppercase;letter-spacing:.13em;font-weight:800;color:var(--muted)}#result{margin-top:10px;font-size:13px;line-height:1.55;overflow-wrap:anywhere;color:#8999aa}#result.found{font:14px ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--good)}#result.done{color:#d6dfeb}.notice{margin-top:16px;border-left:2px solid #c9aa63;padding:10px 12px;background:#c9aa630d;color:#c7b993;font-size:11px;line-height:1.6}.privacy{margin-top:17px;padding-top:15px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);line-height:1.55}.footer{display:flex;justify-content:space-between;gap:10px;color:#67778a;font-size:10px;margin-top:20px}.kbd{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid #344252;border-radius:4px;color:#aab8c7}@media(max-width:760px){.grid{grid-template-columns:1fr}.wrap{padding:20px 15px 36px}.hero{padding-top:34px}.card{padding:17px}.pill{font-size:9px}.footer{flex-direction:column}}
+</style>
+<!-- Embedded bcryptjs 3.0.3 license:
 bcrypt.js
 ————-
 Copyright (c) 2012 Nevins Bartolomeo <nevins.bartolomeo@gmail.com>
@@ -1258,146 +1261,53 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 );
 
 </script>
-  <style>
-    :root{color-scheme:dark;--bg:#0a0d12;--panel:#111720;--panel2:#151e29;--line:#263241;--text:#eff4f8;--muted:#98a8b9;--accent:#a5f36c;--accent2:#c6ff9b;--red:#ff817d;--blue:#81b9ff;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
-    *{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 85% 0%,#16221d 0,transparent 36%),var(--bg);color:var(--text)}
-    .shell{max-width:1160px;margin:0 auto;padding:30px 28px 48px}.topbar{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:20px}.brand{display:flex;gap:12px;align-items:center;font-weight:750;letter-spacing:-.03em;font-size:20px}.mark{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;background:var(--accent);color:#14200e;font-weight:900;font-size:17px}.tag{font-size:11px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}.hero{padding:48px 0 32px;max-width:740px}.eyebrow{color:var(--accent);font-size:11px;text-transform:uppercase;letter-spacing:.16em;font-weight:800}.hero h1{font-size:clamp(34px,5vw,54px);letter-spacing:-.055em;line-height:1.02;margin:12px 0 14px}.hero p{max-width:650px;color:var(--muted);font-size:15px;line-height:1.65;margin:0}.layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);gap:18px;align-items:start}.panel{background:linear-gradient(160deg,#141c26,#10161e 70%);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:0 16px 40px #0002}.panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}.panel-head h2{font-size:14px;letter-spacing:.09em;text-transform:uppercase;margin:0}.step{font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:6px 9px}.field{margin:0 0 18px}.label-row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}.label-row label{font-weight:650;font-size:13px}.hint,.count{font-size:11px;color:var(--muted)}textarea{width:100%;resize:vertical;border:1px solid #344253;border-radius:10px;background:#0c1117;color:var(--text);padding:13px 14px;font:12px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;outline:none;transition:border .15s,box-shadow .15s}textarea:focus{border-color:#90cd64;box-shadow:0 0 0 3px #a5f36c18}#hash{min-height:78px;overflow-wrap:anywhere}#wordlist{min-height:250px}textarea::placeholder{color:#637386}.helper{font-size:11px;color:#8292a3;line-height:1.55;margin:8px 0 0}.actions{display:flex;gap:9px;align-items:center;margin-top:20px}.btn{border:0;border-radius:9px;padding:11px 16px;font-weight:750;font-size:12px;cursor:pointer;transition:transform .12s,filter .12s}.btn:hover{filter:brightness(1.06);transform:translateY(-1px)}.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}.primary{background:var(--accent);color:#15200e;min-width:150px}.secondary{background:var(--panel2);border:1px solid var(--line);color:var(--text)}.result-panel{position:sticky;top:20px}.status-line{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:12px}.dot{width:8px;height:8px;background:#677587;border-radius:50%}.dot.ready{background:var(--accent);box-shadow:0 0 12px #a5f36c77}.dot.error{background:var(--red)}.meter{height:6px;background:#202a35;border-radius:9px;overflow:hidden;margin:17px 0 9px}.meter>i{display:block;height:100%;width:0;background:linear-gradient(90deg,#a5f36c,#defab1);border-radius:9px;transition:width .15s}.progress-meta{display:flex;justify-content:space-between;color:var(--muted);font-size:11px}.result-box{margin-top:22px;border:1px dashed #344253;border-radius:11px;min-height:130px;padding:15px;background:#0c1117}.result-label{color:var(--muted);text-transform:uppercase;letter-spacing:.13em;font-size:10px;font-weight:800}.result-text{margin-top:13px;color:#8392a1;font-size:13px;line-height:1.6;overflow-wrap:anywhere}.result-text.found{color:var(--accent2);font:14px ui-monospace,SFMono-Regular,Consolas,monospace}.result-text.fail{color:#d5deea}.privacy{display:flex;gap:10px;border-top:1px solid var(--line);margin-top:22px;padding-top:17px;color:var(--muted);font-size:11px;line-height:1.55}.privacy svg{flex:none;margin-top:1px;color:var(--accent)}.notice{border-left:2px solid #cfaa59;padding:9px 11px;background:#d3a33b0d;color:#c4b58e;font-size:11px;line-height:1.55;margin-top:16px}.footer{display:flex;justify-content:space-between;gap:14px;margin-top:22px;color:#647487;font-size:10px}.kbd{font:10px ui-monospace,monospace;border:1px solid #394757;border-radius:4px;padding:2px 5px;color:#a9b7c7}
-    @media(max-width:800px){.layout{grid-template-columns:1fr}.result-panel{position:static}.hero{padding-top:36px}.shell{padding:20px 16px 36px}}@media(max-width:480px){.panel{padding:17px}.hero h1{font-size:38px}.topbar .tag{max-width:120px;text-align:right;line-height:1.5}.actions{flex-wrap:wrap}.primary{flex:1}}
-  </style>
 </head>
 <body>
-  <main class="shell">
-    <header class="topbar"><div class="brand"><span class="mark">d</span><span>debcrypt</span></div><span class="tag">pemeriksaan kandidat lokal</span></header>
-    <section class="hero"><div class="eyebrow">Bcrypt • brute force berbasis wordlist</div><h1>Uji kandidat.<br>Temukan kecocokan.</h1><p>Tempel hash bcrypt dan daftar kandidat password. Debcrypt akan menguji kandidat satu per satu di browser ini—tanpa unggah file wordlist.</p></section>
-    <section class="layout" aria-label="Bcrypt candidate checker">
-      <div class="panel">
-        <div class="panel-head"><h2>Input pemeriksaan</h2><span class="step">01 / 02</span></div>
-        <div class="field"><div class="label-row"><label for="hash">Hash bcrypt</label><span class="hint">Satu hash, biasanya 60 karakter</span></div><textarea id="hash" spellcheck="false" autocomplete="off" placeholder="$2b$12$..." aria-describedby="hashHint"></textarea><p class="helper" id="hashHint">Format umum: <code>$2a$</code>, <code>$2b$</code>, atau <code>$2y$</code>.</p></div>
-        <div class="field"><div class="label-row"><label for="wordlist">Wordlist</label><span class="count" id="candidateCount">0 kandidat</span></div><textarea id="wordlist" spellcheck="false" autocomplete="off" placeholder="Tempel kandidat di sini, satu kandidat per baris&#10;contoh-password&#10;kata-rahasia-123&#10;..." aria-describedby="wordlistHint"></textarea><p class="helper" id="wordlistHint">Tempel isi wordlist langsung. Baris kosong diabaikan, baris duplikat diuji sekali. Spasi di awal/akhir kandidat tetap dipertahankan.</p></div>
-        <div class="actions"><button class="btn primary" id="startBtn" disabled>Mulai pemeriksaan <span aria-hidden="true">↗</span></button><button class="btn secondary" id="stopBtn" hidden>Hentikan</button><button class="btn secondary" id="clearBtn">Bersihkan</button></div>
-      </div>
-      <aside class="panel result-panel" aria-live="polite">
-        <div class="panel-head"><h2>Status proses</h2><span class="step">02 / 02</span></div>
-        <div class="status-line"><span id="statusDot" class="dot"></span><span id="statusText">Menunggu input</span></div>
-        <div class="meter" role="progressbar" aria-label="Kemajuan pemeriksaan" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="progressBar"></i></div>
-        <div class="progress-meta"><span id="progressText">0 / 0 kandidat</span><span id="percentText">0%</span></div>
-        <div class="result-box"><div class="result-label">Hasil</div><div id="resultText" class="result-text">Hasil kecocokan akan tampil di sini.</div></div>
-        <div class="notice">Bcrypt bukan enkripsi yang dapat didekripsi langsung. Tool ini hanya membandingkan kandidat dari wordlist dengan hash yang diberikan. Gunakan hanya untuk hash yang Anda berhak audit atau pulihkan.</div>
-        <div class="privacy"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 1 1 8 0v3"/><path d="M12 14v3"/></svg><span>Hash dan wordlist diproses sepenuhnya di browser dan tidak dikirim ke server. Library bcrypt sudah disertakan di dalam file ini, jadi halaman dapat dibuka tanpa koneksi internet.</span></div>
-      </aside>
-    </section>
-    <footer class="footer"><span>DEBCRYPT / LOCAL BROWSER TOOL</span><span>Gunakan <span class="kbd">Ctrl</span> + <span class="kbd">Enter</span> untuk mulai</span></footer>
-  </main>
+<main class="wrap">
+<header class="top"><div class="brand"><span class="logo">d</span><span>debcrypt</span></div><span class="pill">Pemeriksaan di browser</span></header>
+<section class="hero"><div class="eyebrow">Bcrypt · brute force wordlist</div><h1>Cocokkan hash dengan kandidat.</h1><p>Masukkan satu hash bcrypt, lalu tempel wordlist langsung ke kolom. Debcrypt menguji setiap baris satu per satu tanpa unggah file.</p></section>
+<section class="grid" aria-label="Pemeriksaan hash bcrypt">
+<div class="card"><h2>01 · Hash target</h2><div class="label"><label for="hash">Hash bcrypt</label><span class="hint">Format $2a$, $2b$, atau $2y$</span></div><textarea id="hash" spellcheck="false" autocomplete="off" placeholder="$2b$12$..." aria-describedby="hashHint"></textarea><p id="hashHint" class="hintline">Hash bcrypt tidak bisa dibalik langsung; pemeriksaan dilakukan dengan menguji kandidat password.</p></div>
+<div class="card"><h2>02 · Wordlist</h2><div class="label"><label for="words">Kandidat password</label><span id="count" class="count">0 kandidat</span></div><textarea id="words" spellcheck="false" autocomplete="off" placeholder="Satu kandidat per baris&#10;contoh-password&#10;kata-rahasia-123&#10;..." aria-describedby="wordsHint"></textarea><p id="wordsHint" class="hintline">Tempel daftar di sini. Baris kosong diabaikan dan duplikat diuji sekali. Spasi pada kandidat dipertahankan.</p></div>
+</section>
+<section class="card result" aria-live="polite"><h2>Status pemeriksaan</h2><div class="status"><span id="dot" class="dot"></span><span id="status">Menunggu input</span></div><div class="meter" role="progressbar" aria-label="Kemajuan" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="fill"></i></div><div class="meta"><span id="progress">0 / 0 kandidat</span><span id="percent">0%</span></div><div class="output"><div class="output-title">Hasil</div><div id="result">Hasil kecocokan akan tampil di sini.</div></div><div class="bar"><button id="start" class="button primary" disabled>Mulai pemeriksaan</button><button id="stop" class="button secondary" hidden>Hentikan</button><button id="clear" class="button secondary">Bersihkan</button></div><div class="notice">Gunakan hanya untuk hash yang Anda berhak audit atau pulihkan. Bcrypt adalah hash satu arah, bukan enkripsi yang bisa didekripsi.</div><div class="privacy">Hash dan wordlist tetap diproses di browser. Halaman ini tidak mengirim data tersebut ke server dan tidak memerlukan file wordlist.</div></section>
+<footer class="footer"><span>DEBCRYPT · STATIC WEB TOOL</span><span>Mulai: <span class="kbd">Ctrl</span> + <span class="kbd">Enter</span></span></footer>
+</main>
 <script>
 (() => {
-  const hashInput = document.querySelector('#hash');
-  const wordlistInput = document.querySelector('#wordlist');
-  const candidateCount = document.querySelector('#candidateCount');
-  const startBtn = document.querySelector('#startBtn');
-  const stopBtn = document.querySelector('#stopBtn');
-  const clearBtn = document.querySelector('#clearBtn');
-  const statusDot = document.querySelector('#statusDot');
-  const statusText = document.querySelector('#statusText');
-  const progressBar = document.querySelector('#progressBar');
-  const progress = document.querySelector('[role="progressbar"]');
-  const progressText = document.querySelector('#progressText');
-  const percentText = document.querySelector('#percentText');
-  const resultText = document.querySelector('#resultText');
-  let running = false;
-  let cancelRequested = false;
-
-  function candidates() {
-    const seen = new Set();
-    for (const line of wordlistInput.value.split(/\r?\n/)) {
-      if (line.length && !seen.has(line)) seen.add(line);
-    }
-    return [...seen];
-  }
-  function validHash(value) {
-    return /^\$2[aby]\$(0[4-9]|[12][0-9]|3[01])\$[./A-Za-z0-9]{53}$/.test(value);
-  }
-  function setStatus(text, kind = '') {
-    statusText.textContent = text;
-    statusDot.className = `dot ${kind}`;
-  }
-  function setProgress(done, total) {
-    const pct = total ? Math.floor((done / total) * 100) : 0;
-    progressBar.style.width = `${pct}%`;
-    progress.setAttribute('aria-valuenow', String(pct));
-    progressText.textContent = `${done.toLocaleString('id-ID')} / ${total.toLocaleString('id-ID')} kandidat`;
-    percentText.textContent = `${pct}%`;
-  }
-  function updateReady() {
-    candidateCount.textContent = `${candidates().length.toLocaleString('id-ID')} kandidat`;
-    startBtn.disabled = running || !validHash(hashInput.value.trim()) || candidates().length === 0 || !window.bcrypt;
-  }
-  hashInput.addEventListener('input', updateReady);
-  wordlistInput.addEventListener('input', updateReady);
-  window.addEventListener('load', () => {
-    if (!window.bcrypt) setStatus('Komponen bcrypt tidak siap — pastikan file lengkap', 'error');
-    else { setStatus('Library siap', 'ready'); updateReady(); }
-  });
-  startBtn.addEventListener('click', async () => {
-    const hash = hashInput.value.trim();
-    const list = candidates();
-    if (!validHash(hash)) { setStatus('Format hash bcrypt tidak valid', 'error'); return; }
-    if (!window.bcrypt) { setStatus('Library bcrypt belum tersedia', 'error'); return; }
-    if (!list.length) { setStatus('Wordlist masih kosong', 'error'); return; }
-    running = true; cancelRequested = false;
-    startBtn.disabled = true; stopBtn.hidden = false; stopBtn.disabled = false; clearBtn.disabled = true;
-    resultText.className = 'result-text';
-    resultText.textContent = 'Belum ada hasil. Pemeriksaan sedang berjalan…';
-    setStatus(`Memeriksa ${list.length.toLocaleString('id-ID')} kandidat…`, 'ready');
-    setProgress(0, list.length);
-    let checked = 0;
-    try {
-      for (const candidate of list) {
-        if (cancelRequested) break;
-        const matched = await window.bcrypt.compare(candidate, hash);
-        checked++;
-        setProgress(checked, list.length);
-        if (matched) {
-          resultText.className = 'result-text found';
-          resultText.textContent = candidate;
-          setStatus(`Kecocokan ditemukan pada kandidat ke-${checked.toLocaleString('id-ID')}`, 'ready');
-          return;
-        }
-      }
-      if (cancelRequested) {
-        resultText.className = 'result-text fail';
-        resultText.textContent = 'Pemeriksaan dihentikan. Belum ada kecocokan.';
-        setStatus('Dihentikan', '');
-      } else {
-        resultText.className = 'result-text fail';
-        resultText.textContent = 'Tidak ada kandidat yang cocok dengan hash ini.';
-        setStatus('Pemeriksaan selesai — tidak ditemukan', '');
-      }
-    } catch (error) {
-      resultText.className = 'result-text fail';
-      resultText.textContent = 'Pemeriksaan gagal. Pastikan hash bcrypt valid.';
-      setStatus('Terjadi kesalahan saat memeriksa hash', 'error');
-    } finally {
-      running = false; stopBtn.hidden = true; clearBtn.disabled = false; updateReady();
-    }
-  });
-  stopBtn.addEventListener('click', () => { cancelRequested = true; stopBtn.disabled = true; setStatus('Menghentikan setelah kandidat aktif selesai…'); });
-  clearBtn.addEventListener('click', () => {
-    if (running) return;
-    hashInput.value = ''; wordlistInput.value = '';
-    resultText.className = 'result-text'; resultText.textContent = 'Hasil kecocokan akan tampil di sini.';
-    setProgress(0, 0); setStatus(window.bcrypt ? 'Input dibersihkan' : 'Library bcrypt belum tersedia', window.bcrypt ? 'ready' : 'error');
-    updateReady(); hashInput.focus();
-  });
-  document.addEventListener('keydown', event => {
-    if ((event.ctrlKey || event.metaKey) && event.key === 'Enter' && !startBtn.disabled) startBtn.click();
-  });
-  updateReady();
+ const hashField=document.querySelector('#hash'), wordsField=document.querySelector('#words'), count=document.querySelector('#count');
+ const start=document.querySelector('#start'), stop=document.querySelector('#stop'), clear=document.querySelector('#clear');
+ const dot=document.querySelector('#dot'), status=document.querySelector('#status'), fill=document.querySelector('#fill');
+ const progress=document.querySelector('#progress'), percent=document.querySelector('#percent'), meter=document.querySelector('[role="progressbar"]'), result=document.querySelector('#result');
+ let running=false, cancelRequested=false, checked=0;
+ function list(){const set=new Set();for(const line of wordsField.value.split(/\r?\n/)){if(line.length&&!set.has(line))set.add(line)}return [...set]}
+ function validHash(s){return /^\$2[aby]\$(0[4-9]|[12][0-9]|3[01])\$[./A-Za-z0-9]{53}$/.test(s)}
+ function update(){const n=list().length;count.textContent=`${n.toLocaleString('id-ID')} kandidat`;start.disabled=running||!validHash(hashField.value.trim())||n===0||!window.bcrypt}
+ function setStatus(text,type=''){status.textContent=text;dot.className=`dot ${type}`}
+ function setProgress(done,total){const p=total?Math.floor(done*100/total):0;fill.style.width=`${p}%`;meter.setAttribute('aria-valuenow',String(p));progress.textContent=`${done.toLocaleString('id-ID')} / ${total.toLocaleString('id-ID')} kandidat`;percent.textContent=`${p}%`}
+ hashField.addEventListener('input',update);wordsField.addEventListener('input',update);
+ window.addEventListener('load',()=>{if(window.bcrypt){setStatus('Siap');dot.className='dot ready'}else setStatus('Library tidak tersedia. Pastikan file lengkap.','error');update()});
+ start.addEventListener('click',async()=>{
+  const hash=hashField.value.trim(), candidates=list();
+  if(!validHash(hash)){setStatus('Format hash bcrypt tidak valid','error');return}
+  if(!window.bcrypt){setStatus('Library bcrypt tidak tersedia','error');return}
+  if(!candidates.length){setStatus('Tempel wordlist terlebih dahulu','error');return}
+  running=true;cancelRequested=false;checked=0;start.disabled=true;stop.hidden=false;stop.disabled=false;clear.disabled=true;
+  result.className='';result.textContent='Memeriksa kandidat…';setProgress(0,candidates.length);setStatus(`Memeriksa ${candidates.length.toLocaleString('id-ID')} kandidat`,'ready');
+  try{
+   for(const candidate of candidates){if(cancelRequested)break;const matched=await window.bcrypt.compare(candidate,hash);checked++;setProgress(checked,candidates.length);
+    if(matched){result.className='found';result.textContent=candidate;setStatus(`Kecocokan ditemukan pada kandidat ke-${checked.toLocaleString('id-ID')}`,'ready');return}
+   }
+   if(cancelRequested){result.className='done';result.textContent='Pemeriksaan dihentikan.';setStatus('Dihentikan')}else{result.className='done';result.textContent='Tidak ada kandidat yang cocok.';setStatus('Pemeriksaan selesai')}
+  }catch(e){result.className='done';result.textContent='Hash tidak dapat diperiksa. Pastikan format hash valid.';setStatus('Pemeriksaan gagal','error')}
+  finally{running=false;stop.hidden=true;clear.disabled=false;update()}
+ });
+ stop.addEventListener('click',()=>{cancelRequested=true;stop.disabled=true;setStatus('Menghentikan setelah kandidat aktif selesai…')});
+ clear.addEventListener('click',()=>{if(running)return;hashField.value='';wordsField.value='';result.className='';result.textContent='Hasil kecocokan akan tampil di sini.';setProgress(0,0);setStatus('Input dibersihkan',window.bcrypt?'ready':'error');update();hashField.focus()});
+ document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter'&&!start.disabled)start.click()});update();
 })();
 </script>
 </body>
 </html>
-
-
-
 
 
