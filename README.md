@@ -2,17 +2,12 @@
 
 Situs statis untuk membandingkan hash bcrypt dengan kandidat dari wordlist yang ditempel di halaman. `index.html` sudah berada di root repository. Hash dan kandidat diproses di browser dan tidak dikirim ke hosting.
 
-## Aktifkan situs
+## Aktifkan GitHub Pages
 
-Buka [Settings → Pages](https://github.com/DAFFAWRDHNA/debcrypt-web/settings/pages), lalu pada **Build and deployment** pilih:
+1. Buka [Settings → Pages](https://github.com/DAFFAWRDHNA/debcrypt-web/settings/pages).
+2. Pada **Build and deployment → Source**, pilih **GitHub Actions**.
+3. Workflow `.github/workflows/pages.yml` akan menerbitkan situs setiap kali ada perubahan di branch `main`.
+4. Lihat **Actions** untuk status deployment.
 
-- **Source:** Deploy from a branch
-- **Branch:** `main`
-- **Folder:** `/(root)`
-
-Klik **Save**. Setelah GitHub Pages selesai menerbitkan, situs dapat dibuka di:
-
-https://DAFFAWRDHNA.github.io/debcrypt-web/
-
-GitHub Pages menerbitkan isi branch/folder yang dipilih; untuk situs ini, halaman masuk `index.html` berada di root branch `main`.
+URL situs: https://DAFFAWRDHNA.github.io/debcrypt-web/
 
