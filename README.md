@@ -1,14 +1,18 @@
 # Debcrypt Web
 
-Situs statis untuk membandingkan hash bcrypt dengan kandidat dari wordlist yang ditempel di halaman. Berkas `index.html` sudah memuat seluruh dependensi; tidak perlu backend. Hash dan daftar kandidat diproses di browser, tidak dikirim ke hosting.
+Situs statis untuk membandingkan hash bcrypt dengan kandidat dari wordlist yang ditempel di halaman. `index.html` sudah berada di root repository. Hash dan kandidat diproses di browser dan tidak dikirim ke hosting.
 
-## Publikasikan dengan GitHub Pages
+## Aktifkan situs
 
-1. Buat repository GitHub baru dan pilih **Public** agar situs dapat dibuka online.
-2. Unggah `index.html` dari folder ini ke root repository.
-3. Buka **Settings → Pages**.
-4. Pilih **Deploy from a branch**, branch `main`, folder `/ (root)`, lalu simpan.
-5. Tunggu hingga GitHub Pages menampilkan URL situs di halaman Settings → Pages.
+Buka [Settings → Pages](https://github.com/DAFFAWRDHNA/debcrypt-web/settings/pages), lalu pada **Build and deployment** pilih:
 
-`start-debcrypt.py` dan `start-debcrypt.bat` hanya dipakai untuk menjalankan server lokal; keduanya tidak diperlukan di hosting.
+- **Source:** Deploy from a branch
+- **Branch:** `main`
+- **Folder:** `/(root)`
+
+Klik **Save**. Setelah GitHub Pages selesai menerbitkan, situs dapat dibuka di:
+
+https://DAFFAWRDHNA.github.io/debcrypt-web/
+
+GitHub Pages menerbitkan isi branch/folder yang dipilih; untuk situs ini, halaman masuk `index.html` berada di root branch `main`.
 
