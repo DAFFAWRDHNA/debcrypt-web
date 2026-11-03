@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f2ec">
+  <title>Bcrypt Inspector</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f4f2ec;
+      --card: #fffefa;
+      --ink: #20251f;
+      --muted: #687068;
+      --line: #d9ddd3;
+      --green: #315b43;
+      --green-soft: #e8f0e8;
+      --amber: #885a1b;
+      --amber-soft: #fff1d8;
+      --red: #933f35;
+      --red-soft: #fbe9e5;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    .page { width: min(880px, calc(100% - 36px)); margin: 0 auto; padding: 54px 0 64px; }
+    .topline { display: flex; align-items: center; gap: 10px; color: var(--green); font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .dot { width: 9px; height: 9px; border-radius: 50%; background: #79a678; box-shadow: 0 0 0 4px #e3ecdf; }
+    h1 { margin: 17px 0 10px; font-size: clamp(34px, 6vw, 54px); line-height: 1.05; letter-spacing: -.045em; }
+    .intro { max-width: 650px; margin: 0; color: var(--muted); font-size: 17px; }
+    .card { margin-top: 32px; border: 1px solid var(--line); border-radius: 18px; background: var(--card); box-shadow: 0 12px 34px #28351f0b; overflow: hidden; }
+    .card-head { padding: 24px 26px 0; }
+    .label { display: block; margin-bottom: 9px; font-size: 14px; font-weight: 700; }
+    textarea {
+      display: block; width: 100%; min-height: 112px; resize: vertical; border: 1px solid #cbd2c6; border-radius: 10px;
+      padding: 14px 15px; background: #fff; color: var(--ink); font: 14px/1.55 ui-monospace, SFMono-Regular, Consolas, monospace;
+      outline: none; transition: border-color .15s, box-shadow .15s;
+    }
+    textarea:focus { border-color: #5e8362; box-shadow: 0 0 0 3px #dfeadf; }
+    .actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; padding: 14px 26px 24px; }
+    button { border: 0; border-radius: 9px; padding: 10px 15px; background: var(--green); color: white; font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; }
+    button:hover { background: #254833; }
+    button.secondary { border: 1px solid var(--line); background: transparent; color: var(--ink); }
+    button.secondary:hover { background: #f1f2ed; }
+    .hint { margin-left: auto; color: var(--muted); font-size: 12px; }
+    .result { display: none; border-top: 1px solid var(--line); padding: 22px 26px 25px; }
+    .result.show { display: block; }
+    .status { display: flex; align-items: flex-start; gap: 11px; padding: 13px 15px; border-radius: 10px; font-size: 14px; }
+    .status.ok { background: var(--green-soft); color: #294c35; }
+    .status.warn { background: var(--amber-soft); color: #714912; }
+    .status.bad { background: var(--red-soft); color: #7b3027; }
+    .status strong { display: block; margin-bottom: 2px; }
+    .status p { margin: 0; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 17px; }
+    .fact { min-width: 0; padding: 14px; border: 1px solid var(--line); border-radius: 10px; }
+    .fact span { display: block; color: var(--muted); font-size: 12px; }
+    .fact strong { display: block; margin-top: 5px; overflow-wrap: anywhere; font-size: 15px; }
+    .section { margin-top: 25px; }
+    .section h2 { margin: 0 0 10px; font-size: 15px; }
+    .parts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .part { padding: 13px 14px; border-radius: 9px; background: #f3f4ef; }
+    .part span { display: block; color: var(--muted); font-size: 12px; }
+    .part code { display: block; margin-top: 5px; overflow-wrap: anywhere; font-size: 13px; }
+    .note { margin: 13px 0 0; color: var(--muted); font-size: 12px; }
+    .privacy { display: flex; gap: 12px; align-items: flex-start; margin-top: 19px; padding: 16px 18px; border: 1px solid #d9ddd3; border-radius: 12px; color: #4d574e; background: #edf0e8; font-size: 13px; }
+    .privacy b { color: #2f4634; }
+    .privacy-icon { font-size: 17px; }
+    footer { margin-top: 23px; color: var(--muted); font-size: 12px; }
+    @media (max-width: 620px) {
+      .page { padding-top: 34px; }
+      .card-head { padding: 20px 18px 0; }
+      .actions { padding: 13px 18px 20px; }
+      .result { padding: 18px; }
+      .grid { grid-template-columns: 1fr; gap: 9px; }
+      .parts { grid-template-columns: 1fr; }
+      .hint { width: 100%; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="topline"><span class="dot" aria-hidden="true"></span> Alat pemeriksa format</div>
+    <h1>Bcrypt Inspector</h1>
+    <p class="intro">Periksa struktur hash bcrypt dan lihat parameter yang tertanam di dalamnya. Pemeriksaan berlangsung di browser Anda.</p>
+
+    <section class="card" aria-labelledby="input-title">
+      <div class="card-head">
+        <label class="label" id="input-title" for="hash">Hash bcrypt</label>
+        <textarea id="hash" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="$2b$12$..." aria-describedby="input-help"></textarea>
+      </div>
+      <div class="actions">
+        <button id="inspect" type="button">Periksa hash</button>
+        <button class="secondary" id="clear" type="button">Bersihkan</button>
+        <span class="hint" id="input-help">Tempel satu hash bcrypt, biasanya 60 karakter.</span>
+      </div>
+      <div class="result" id="result" aria-live="polite"></div>
+    </section>
+
+    <aside class="privacy">
+      <span class="privacy-icon" aria-hidden="true">◈</span>
+      <div><b>Privat secara default.</b> Halaman ini tidak mengunggah hash, meminta wordlist, atau mengirim data ke server. Hash diproses hanya untuk memeriksa bentuk dan parameternya.</div>
+    </aside>
+    <footer>Format yang dikenali: bcrypt $2a$, $2b$, atau $2y$. Hasil pemeriksaan format tidak membuktikan bahwa hash valid secara kriptografis atau mengungkap kata sandinya.</footer>
+  </main>
+  <script>
+    const field = document.querySelector('#hash');
+    const result = document.querySelector('#result');
+    const inspectButton = document.querySelector('#inspect');
+    const clearButton = document.querySelector('#clear');
+
+    function escapeHtml(value) {
+      return value.replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+    }
+
+    function showInvalid(message) {
+      result.className = 'result show';
+      result.innerHTML = `<div class="status bad"><span aria-hidden="true">●</span><div><strong>Format belum dikenali</strong><p>${escapeHtml(message)}</p></div></div><p class="note">Hash bcrypt umumnya memiliki 60 karakter dengan pola <code>$2b$12$</code> di awal, diikuti salt 22 karakter dan checksum 31 karakter.</p>`;
+    }
+
+    function inspectHash() {
+      const value = field.value.trim();
+      if (!value) {
+        showInvalid('Tempel satu hash bcrypt untuk memeriksanya.');
+        field.focus();
+        return;
+      }
+      const match = value.match(/^\$(2[aby])\$(\d{2})\$([./A-Za-z0-9]{53})$/);
+      if (!match) {
+        showInvalid('Periksa awalan, panjang, dan karakter hash. Alat ini menerima satu hash bcrypt dalam format standar.');
+        return;
+      }
+      const [, version, costText, payload] = match;
+      const cost = Number(costText);
+      if (cost < 4 || cost > 31) {
+        showInvalid('Nilai cost bcrypt harus berada dalam rentang 04 sampai 31.');
+        return;
+      }
+      const salt = payload.slice(0, 22);
+      const checksum = payload.slice(22);
+      const costLabel = `${costText} (2^${cost} putaran kerja)`;
+      result.className = 'result show';
+      result.innerHTML = `
+        <div class="status ok"><span aria-hidden="true">●</span><div><strong>Struktur hash sesuai pola bcrypt</strong><p>Bagian hash dikenali dan parameter dapat dibaca.</p></div></div>
+        <div class="grid">
+          <div class="fact"><span>Varian</span><strong>${escapeHtml(version)}</strong></div>
+          <div class="fact"><span>Cost factor</span><strong>${escapeHtml(costLabel)}</strong></div>
+          <div class="fact"><span>Panjang</span><strong>${value.length} karakter</strong></div>
+        </div>
+        <div class="section">
+          <h2>Bagian hash</h2>
+          <div class="parts">
+            <div class="part"><span>Salt · 22 karakter</span><code>${escapeHtml(salt)}</code></div>
+            <div class="part"><span>Checksum · 31 karakter</span><code>${escapeHtml(checksum)}</code></div>
+          </div>
+          <p class="note">Ini adalah pemeriksaan format. Hash bcrypt tidak dapat dibalik menjadi kata sandi; autentikasi seharusnya membandingkan kata sandi yang diberikan dengan hash menggunakan pustaka bcrypt tepercaya.</p>
+        </div>`;
+    }
+
+    inspectButton.addEventListener('click', inspectHash);
+    clearButton.addEventListener('click', () => {
+      field.value = '';
+      result.className = 'result';
+      result.replaceChildren();
+      field.focus();
+    });
+    field.addEventListener('keydown', event => {
+      if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') inspectHash();
+    });
+  </script>
+</body>
+</html>
+
